@@ -7,7 +7,7 @@ import * as Src from './sources.js';
 import * as P from './player.js';
 import { CONFIG } from './config.js';
 
-const VERSION = '2.0.0';
+const VERSION = '2.0.1';
 const prefs = loadPrefs();
 const S = {
   tracks: [], playlists: [], radios: [], podcasts: [],
@@ -243,13 +243,18 @@ async function openPodcast(p) {
 function viewSettings() {
   const c = cfg(), tk = Drive.token(), mins = Math.round(Drive.tokenExpiresIn() / 60000);
   const lastSync = lsGet('vdb-lastsync');
+  const originBox = `<div class="copybox"><code id="origin">${esc(location.origin)}</code><button class="btn small" data-act="copy" data-target="origin">Copiar</button></div>`;
+  const redirBox = `<div class="copybox"><code id="ruri">${esc(Drive.redirectUri())}</code><button class="btn small" data-act="copy" data-target="ruri">Copiar</button></div>`;
   let h = `<button class="back" data-act="tab" data-tab="songs">${I.back}Músicas</button>` + header('Ajustes', 'Configurações', '');
   h += `<section class="set"><h2>${I.cloud}Google Drive</h2>`;
   if (!c.googleClientId) {
-    h += `<p>Para ler suas músicas do Drive, o app precisa de um <b>Client ID</b> do Google. Ele é gratuito e o guia no GitHub mostra o passo a passo.</p>
-      <p>Na configuração do Google, use este endereço em <b>Origens JavaScript autorizadas</b> e em <b>URIs de redirecionamento autorizados</b>:</p>
-      <div class="copybox"><code id="ruri">${esc(Drive.redirectUri())}</code><button class="btn small" data-act="copy" data-target="ruri">Copiar</button></div>
-      <form id="gForm" style="display:grid;gap:10px"><input class="field" id="gId" placeholder="xxxxxxxx.apps.googleusercontent.com" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn primary" type="submit">Salvar Client ID</button></form>`;
+    h += `<p>Para ler suas músicas do Drive, o app precisa de um <b>Client ID</b> do Google. Ele é gratuito e o guia no GitHub (README) mostra o passo a passo.</p>
+      <p><b>1.</b> No site do Google Cloud, ao criar o cliente “Aplicativo da Web”, cole em <b>Origens JavaScript autorizadas</b>:</p>
+      ${originBox}
+      <p><b>2.</b> E em <b>URIs de redirecionamento autorizados</b>:</p>
+      ${redirBox}
+      <p><b>3.</b> Depois de criar, o Google mostra o <b>ID do cliente</b> (termina em .apps.googleusercontent.com). Cole esse código aqui:</p>
+      <form id="gForm" style="display:grid;gap:10px"><input class="field" id="gId" placeholder="123456-abc.apps.googleusercontent.com" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn primary" type="submit">Salvar Client ID</button></form>`;
   } else {
     h += `<div class="kv"><span>Situação</span>${tk ? `<span class="status ok">Conectado · expira em ${mins} min</span>` : Drive.everConnected() ? `<span class="status warn">Sessão expirada</span>` : '<span class="status">Desconectado</span>'}</div>`;
     h += `<div class="kv"><span>Pasta</span><b>${c.folder ? esc(c.folder.name) : 'nenhuma escolhida'}</b></div>`;
@@ -259,7 +264,7 @@ function viewSettings() {
       : `<button class="btn primary" data-act="signin">Entrar com Google</button>`}</div>
       <p>O Google pede um novo login a cada hora. As músicas que você já ouviu ficam guardadas por um tempo e tocam mesmo sem login.</p>
       <details><summary class="note" style="cursor:pointer">Trocar Client ID</summary><form id="gForm" style="display:grid;gap:10px;margin-top:8px"><input class="field" id="gId" value="${esc(c.googleClientId)}" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn" type="submit">Salvar</button></form>
-      <div class="copybox" style="margin-top:10px"><code id="ruri">${esc(Drive.redirectUri())}</code><button class="btn small" data-act="copy" data-target="ruri">Copiar</button></div></details>`;
+      <p style="margin-top:10px">Origem autorizada:</p>${originBox}<p style="margin-top:8px">URI de redirecionamento:</p>${redirBox}</details>`;
   }
   h += `</section>`;
   h += `<section class="set"><h2>${I.compass}Jamendo</h2><p>Chave grátis para a aba Descobrir.</p>
@@ -676,6 +681,7 @@ document.addEventListener('submit', async e => {
   else if (f.id === 'jamForm') { const v = $('#jamId').value.trim(); setCfg({ jamendoClientId: v }); S.jam.results = null; S.jam.error = ''; toast(v ? 'Chave do Jamendo salva' : 'Chave removida'); render(); }
   else if (f.id === 'gForm') {
     const v = $('#gId').value.trim();
+    if (/^https?:\/\//i.test(v)) { toast('Esse é o endereço do app, que vai no site do Google Cloud. Aqui cole o ID do cliente que o Google gera.', 6000); return; }
     if (v && !/\.apps\.googleusercontent\.com$/.test(v)) { toast('Esse não parece um Client ID do Google. Ele termina em .apps.googleusercontent.com', 4500); return; }
     setCfg({ googleClientId: v }); toast(v ? 'Client ID salvo. Agora toque em Entrar com Google.' : 'Client ID removido', 3500); render();
   }

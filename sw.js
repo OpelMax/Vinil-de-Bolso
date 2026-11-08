@@ -1,5 +1,5 @@
 // Guarda os arquivos do app para ele abrir mesmo sem internet.
-const VERSION = 'vdb-2.0.0';
+const VERSION = 'vdb-2.0.1';
 const SHELL = ['./', 'index.html', 'styles.css', 'manifest.webmanifest', 'js/app.js', 'js/util.js', 'js/db.js', 'js/tags.js', 'js/drive.js', 'js/sources.js', 'js/player.js', 'js/config.js', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== VERSION).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
