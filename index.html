@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vinil de Bolso</title>
+<meta name="description" content="Suas músicas do Google Drive, rádios, Jamendo e podcasts num só lugar.">
+<meta name="theme-color" content="#EEF0F5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C0E14" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Vinil">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main id="main" aria-live="polite"></main>
+
+<div id="dock"><div class="dock-in">
+  <div id="mini" hidden>
+    <div class="mini-prog"><i id="miniBar"></i></div>
+    <button class="mini-main" data-act="openplayer" aria-label="Abrir player"><span id="miniArt"></span><span class="meta"><span class="t" id="miniTitle"></span><span class="a" id="miniArtist"></span></span></button>
+    <button class="icon-btn" data-act="toggle" id="miniPlay" aria-label="Tocar"></button>
+    <button class="icon-btn" data-act="next" id="miniNext" aria-label="Próxima"></button>
+  </div>
+  <nav id="tabs" aria-label="Seções">
+    <button class="tab" data-act="tab" data-tab="songs" id="tab-songs"></button>
+    <button class="tab" data-act="tab" data-tab="playlists" id="tab-playlists"></button>
+    <button class="tab" data-act="tab" data-tab="radio" id="tab-radio"></button>
+    <button class="tab" data-act="tab" data-tab="discover" id="tab-discover"></button>
+    <button class="tab" data-act="tab" data-tab="podcasts" id="tab-podcasts"></button>
+  </nav>
+</div></div>
+
+<div id="player" hidden role="dialog" aria-label="Tocando agora">
+  <div class="pl-glow" id="plGlow"></div>
+  <div class="pl-in">
+    <header class="pl-top">
+      <button class="icon-btn" data-act="closeplayer" aria-label="Fechar player" id="plClose"></button>
+      <span class="eyebrow" id="plSource">Tocando agora</span>
+      <button class="icon-btn" data-act="menucur" aria-label="Opções" id="plMore"></button>
+    </header>
+    <div class="art" id="plArt"></div>
+    <div class="pl-info">
+      <div><h2 id="plTitle"></h2><p id="plArtist"></p></div>
+      <button class="icon-btn fav-btn" data-act="favcur" id="plFav" aria-label="Favoritar"></button>
+    </div>
+    <input type="range" id="seek" min="0" max="1000" value="0" step="1" aria-label="Posição">
+    <div class="times"><span id="tCur">0:00</span><span class="fmtchip" id="tFmt"></span><span id="tDur">0:00</span></div>
+    <div class="controls">
+      <button class="icon-btn toggle" data-act="shuffle" id="cShuffle" aria-label="Aleatório"></button>
+      <button class="icon-btn" data-act="prev" id="cPrev" aria-label="Anterior"></button>
+      <button class="icon-btn big" data-act="toggle" id="cPlay" aria-label="Tocar"></button>
+      <button class="icon-btn" data-act="next" id="cNext" aria-label="Próxima"></button>
+      <button class="icon-btn toggle" data-act="repeat" id="cRepeat" aria-label="Repetir"></button>
+    </div>
+    <section class="upnext"><h3 id="upnextTitle">A seguir</h3><ul class="list" id="upnext"></ul></section>
+  </div>
+</div>
+
+<div id="sheetWrap" hidden><div class="backdrop" data-act="closesheet"></div><div class="sheet" id="sheet" role="dialog"></div></div>
+<div id="toast" hidden role="status"></div>
+<input type="file" id="file" class="vh" accept="audio/*,.mp3,.m4a,.aac,.wav,.flac,.aif,.aiff" multiple tabindex="-1">
+<audio id="au" playsinline preload="auto"></audio>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
