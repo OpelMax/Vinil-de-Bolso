@@ -1,0 +1,33 @@
+:root { --cor: #1f5fa8; --fundo: #f4f6f9; --borda: #d8dde4; --alerta: #c0392b; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: var(--fundo); color: #222; }
+header { background: var(--cor); color: #fff; padding: 12px 16px 10px; padding-top: max(12px, env(safe-area-inset-top));
+  position: sticky; top: 0; z-index: 1; }
+header h1 { margin: 0 0 8px; font-size: 1.2rem; }
+/* abas roláveis na horizontal no celular */
+nav { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 0 16px; }
+nav::-webkit-scrollbar { display: none; }
+nav button { flex: none; background: transparent; color: #fff; border: 1px solid #fff6; border-radius: 18px;
+  padding: 8px 12px; font: inherit; font-size: .9rem; cursor: pointer; }
+nav button.ativa { background: #fff; color: var(--cor); }
+main { max-width: 1100px; margin: 0 auto; padding: 16px; padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.card { background: #fff; border: 1px solid var(--borda); border-radius: 10px; padding: 14px; }
+.card small { color: #666; display: block; margin-bottom: 4px; }
+.card strong { font-size: 1.3rem; }
+form { background: #fff; border: 1px solid var(--borda); border-radius: 10px; padding: 14px; display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
+label { font-size: .85rem; display: flex; flex-direction: column; gap: 4px; }
+input, select { padding: 10px; border: 1px solid var(--borda); border-radius: 6px; font: inherit; font-size: 16px; background: #fff; min-width: 0; }
+form button, .backup button, .botao { background: var(--cor); color: #fff; border: 0; border-radius: 6px; padding: 12px;
+  font: inherit; font-size: 1rem; cursor: pointer; text-align: center; }
+form button { align-self: end; }
+.backup { display: grid; gap: 12px; }
+.backup p { margin: 0; line-height: 1.4; }
+.tabela { overflow-x: auto; border-radius: 10px; border: 1px solid var(--borda); }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { padding: 10px 8px; border-bottom: 1px solid var(--borda); text-align: left; font-size: .9rem; white-space: nowrap; }
+th { background: #eef1f5; }
+.alerta { color: var(--alerta); font-weight: 600; }
+.vazio { color: #777; text-align: center; }
+td button { background: none; border: 0; color: var(--alerta); cursor: pointer; font-size: 1.1rem; padding: 4px 8px; }
