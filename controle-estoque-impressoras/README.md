@@ -1,64 +1,47 @@
 # Controle de Estoque – Impressoras
 
-Esqueleto de aplicativo para controlar:
+App para celular (Android) que controla:
 
-- **Tintas e toners**: cadastro, saldo calculado automaticamente, alerta de estoque mínimo
-- **Entradas e saídas** de suprimentos (a saída pode indicar a impressora de destino; saída maior que o saldo é bloqueada)
+- **Tintas e toners**: cadastro, saldo automático e alerta de estoque mínimo
+- **Entradas e saídas** (a saída pode indicar a impressora de destino; saída maior que o saldo é bloqueada)
 - **Impressoras alugadas**: locadora, para onde/quem foi alugada, endereço, contrato, aluguel mensal, status
-- **Manutenções nas impressoras**
-- **Manutenções nos toners** (recarga, cilindro, limpeza...)
-- **Resumo de valores**: valor em estoque, total de entradas e saídas, aluguel mensal, gastos com manutenção
+- **Manutenções nas impressoras** e **nos toners** (recarga, cilindro...)
+- **Resumo de valores**: estoque, entradas, saídas, aluguéis e manutenções
+- **Backup**: baixa e restaura um arquivo com todos os dados
 
-Projeto independente: não compartilha código com nenhum outro app.
+Funciona **sem internet** e sem servidor: os dados ficam salvos no próprio celular.
+Projeto independente, sem relação com nenhum outro app.
 
-## Como rodar
+## Instalar no Android
 
-```bash
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+1. Abra o link do app no **Chrome** do celular.
+2. Toque em **Instalar app** (ou menu ⋮ → **Adicionar à tela inicial** → **Instalar**).
+3. Pronto: o ícone "Estoque" aparece junto com os outros apps.
+
+## Colocar o app no ar (uma vez só, grátis, pelo GitHub Pages)
+
+1. Crie um repositório novo no GitHub (ex.: `controle-estoque-impressoras`).
+2. Envie para ele **o conteúdo desta pasta** (arquivos na raiz do repositório).
+3. No repositório: **Settings → Pages → Branch: `main` / `(root)` → Save**.
+4. Em 1–2 minutos o link fica pronto: `https://SEU-USUARIO.github.io/controle-estoque-impressoras/`
+
+Atualizações: basta enviar os arquivos novos; o app atualiza sozinho ao abrir com internet.
+
+## Importante sobre os dados
+
+Os dados ficam **só no aparelho**. Use a aba **Backup** com frequência e guarde o arquivo
+(Drive, WhatsApp, e-mail). O mesmo arquivo serve para passar os dados para outro celular.
+Desinstalar o app ou limpar os dados do Chrome apaga os registros.
+
+## Arquivos
+
+```
+index.html             página do app
+app.js                 telas, regras e armazenamento local
+style.css              visual (pensado para celular)
+manifest.webmanifest   nome, ícone e cores do app instalado
+sw.js                  permite funcionar sem internet
+icons/                 ícones do app
 ```
 
-- Interface: http://localhost:8000
-- Documentação da API (Swagger): http://localhost:8000/docs
-
-O banco é um arquivo SQLite (`estoque.db`) criado sozinho na primeira execução.
-Para usar outro banco, defina `DATABASE_URL` (ex.: `postgresql://usuario:senha@host/estoque`).
-
-## Estrutura
-
-```
-app/
-  main.py            # cria o app e registra as rotas
-  database.py        # conexão (SQLAlchemy)
-  models.py          # tabelas
-  schemas.py         # validação de entrada/saída
-  crud.py            # gerador de rotas CRUD genéricas
-  routers/
-    suprimentos.py   # tintas/toners + cálculo de saldo
-    movimentos.py    # entradas e saídas
-    cadastros.py     # impressoras e manutenções
-    resumo.py        # painel de valores
-static/              # interface web (HTML + JS puro)
-```
-
-## Endpoints
-
-| Recurso | Rota |
-|---|---|
-| Tintas/toners | `/api/suprimentos` |
-| Entradas/saídas | `/api/movimentos` (filtros `?suprimento_id=&tipo=`) |
-| Impressoras alugadas | `/api/impressoras` |
-| Manutenção de impressoras | `/api/manutencoes-impressora` |
-| Manutenção de toners | `/api/manutencoes-toner` |
-| Resumo de valores | `/api/resumo` |
-
-Todos aceitam `GET`, `POST` e `DELETE /{id}`; os cadastros também aceitam `PUT /{id}`.
-
-## Próximos passos sugeridos
-
-- Login e permissões de usuário
-- Edição de registros pela interface (hoje: criar e excluir)
-- Filtros por período e relatórios em PDF/Excel
-- Migrações com Alembic em vez de `create_all`
-- Aviso de contratos de aluguel perto do vencimento
+Para testar no computador: `python3 -m http.server` dentro da pasta e abrir http://localhost:8000
