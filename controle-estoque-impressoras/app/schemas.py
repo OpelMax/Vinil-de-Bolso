@@ -54,6 +54,7 @@ class ImpressoraIn(BaseModel):
     modelo: str
     numero_serie: str | None = None
     locadora: str | None = None
+    alugada_para: str | None = None
     local: str | None = None
     data_inicio: date | None = None
     data_fim: date | None = None

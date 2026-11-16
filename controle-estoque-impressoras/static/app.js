@@ -38,11 +38,11 @@ const SECOES = {
     titulo: "Impressoras alugadas", url: "/api/impressoras",
     campos: [
       ["marca", "Marca"], ["modelo", "Modelo"], ["numero_serie", "Nº de série"], ["locadora", "Locadora"],
-      ["local", "Local / setor"], ["data_inicio", "Início do contrato", "date"], ["data_fim", "Fim do contrato", "date"],
+      ["alugada_para", "Alugada para (cliente/destino)"], ["local", "Endereço / local de instalação"], ["data_inicio", "Início do contrato", "date"], ["data_fim", "Fim do contrato", "date"],
       ["valor_mensal", "Aluguel mensal (R$)", "money"], ["status", "Status", ["ativa", "manutencao", "devolvida"]],
     ],
     colunas: [["id", "#"], ["marca", "Marca"], ["modelo", "Modelo"], ["numero_serie", "Série"], ["locadora", "Locadora"],
-      ["local", "Local"], ["valor_mensal", "Aluguel/mês", brl], ["status", "Status"]],
+      ["alugada_para", "Alugada para"], ["local", "Local"], ["valor_mensal", "Aluguel/mês", brl], ["status", "Status"]],
   },
   manutImpressoras: {
     titulo: "Manutenção de impressoras", url: "/api/manutencoes-impressora",

@@ -4,7 +4,7 @@ Esqueleto de aplicativo para controlar:
 
 - **Tintas e toners**: cadastro, saldo calculado automaticamente, alerta de estoque mínimo
 - **Entradas e saídas** de suprimentos (a saída pode indicar a impressora de destino; saída maior que o saldo é bloqueada)
-- **Impressoras alugadas**: locadora, local, contrato, aluguel mensal, status
+- **Impressoras alugadas**: locadora, para onde/quem foi alugada, endereço, contrato, aluguel mensal, status
 - **Manutenções nas impressoras**
 - **Manutenções nos toners** (recarga, cilindro, limpeza...)
 - **Resumo de valores**: valor em estoque, total de entradas e saídas, aluguel mensal, gastos com manutenção

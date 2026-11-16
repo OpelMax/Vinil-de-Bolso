@@ -51,7 +51,8 @@ class Impressora(Base):
     modelo: Mapped[str] = mapped_column(String(80))
     numero_serie: Mapped[str | None] = mapped_column(String(80), unique=True)
     locadora: Mapped[str | None] = mapped_column(String(120))    # empresa que aluga
-    local: Mapped[str | None] = mapped_column(String(120))       # setor / endereço onde está
+    alugada_para: Mapped[str | None] = mapped_column(String(120))  # cliente / empresa / setor de destino
+    local: Mapped[str | None] = mapped_column(String(200))       # endereço onde está instalada
     data_inicio: Mapped[date | None] = mapped_column(Date)
     data_fim: Mapped[date | None] = mapped_column(Date)
     valor_mensal: Mapped[float] = mapped_column(Float, default=0)
